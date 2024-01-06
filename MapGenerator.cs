@@ -70,6 +70,7 @@ public partial class MapGenerator : Node {
 	MapData GenerateMapData(Vector2 localOffset) {
 		GD.Print("Map size:"+mapChunkSize);
 		float[,] noiseMap = Noise.GenerateNoiseMap(mapChunkSize, seed, noiseScale, octaves, persistance, lacunarity, localOffset);
+		// TODO not being used anymore
 		float[,] mountainRangeMap = Noise.GenerateMountainRangeMap(mapChunkSize, seed, mountainRangeNoiseScale, octaves, persistance, lacunarity, localOffset);
 		falloffMap = FalloffGenerator.GenerateFalloffMap(mapChunkSize);
 
