@@ -93,6 +93,7 @@ public partial class EndlessTerrain : Node {
 			mapGenerator.DrawMap(meshObject, position);
 			meshObject.Position = positionV3;
 			meshObject.Scale = Vector3.One; // TODO might need to divide by 10
+			meshObject.CreateTrimeshCollision();
 			SetVisible(true);
 		}
 
