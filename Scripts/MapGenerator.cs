@@ -39,9 +39,9 @@ public partial class MapGenerator : Node {
 	// Bleh somehow should make this editable in inspector
 	// Also because we arent normalizing the heights, its not going to always be 0 to 1, thus the weird values. Not great but better than having to figure out normalized values for seems for now
 	public TerrainType[] regions = new TerrainType[] {
-		new TerrainType(0.28f, new Color("#326E9A"), "water"),
-		new TerrainType(0.31f, new Color("#2C8F2C"), "land"),
-		new TerrainType(0.35f, new Color("#604421"), "rock"),
+		new TerrainType(0.29f, new Color("#ffeb99"), "water"),
+		new TerrainType(0.32f, new Color("#2C8F2C"), "land"),
+		new TerrainType(0.37f, new Color("#604421"), "rock"),
 		new TerrainType(1f, new Color("#FFFFFF"), "snow")
 	};
 
@@ -115,7 +115,7 @@ public partial class MapGenerator : Node {
 		//display.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap, heightMultiplier),);
 	}
 
-	public void DrawMap(MeshInstance3D mesh, Vector2 offset) {
+	public MapData DrawMap(MeshInstance3D mesh, Vector2 offset) {
 		MapData mapData = GenerateMapData(offset);
 		MeshData meshData = MeshGenerator.GenerateTerrainMesh(mapData.noiseMap, levelOfDetail, mapData.mountainRangeMap, mountainPriority, erosionPriority, heightMultiplier);
 		mesh.Mesh = meshData.CreateMesh();
@@ -126,6 +126,7 @@ public partial class MapGenerator : Node {
 		meshMaterial.AlbedoTexture = imageTexture;
 		mesh.SetSurfaceOverrideMaterial(0, meshMaterial);
 		//display.DrawMesh(MeshGenerator.GenerateTerrainMesh(noiseMap, heightMultiplier),);
+		return mapData;
 	}
 }
 

@@ -16,6 +16,7 @@ public static class MeshGenerator {
 		GD.Print("meshSimplificationIncrement:"+meshSimplificationIncrement);
 		GD.Print("VerticesPerLine:"+verticesPerLine);
 		GD.Print("Width:"+width+" Height:"+height);
+		GD.Print("multiplier:"+multiplier);
 		MeshData meshData = new MeshData(verticesPerLine, verticesPerLine);
 		int vertexIndex = 0;
 
@@ -23,10 +24,6 @@ public static class MeshGenerator {
 			for (int x = 0; x < width - 1; x += meshSimplificationIncrement) {
 				//meshData.AddTriangle(vertexIndex, vertexIndex + width + 1, vertexIndex + width);
 				//meshData.AddTriangle(vertexIndex + width + 1, vertexIndex, vertexIndex + 1);
-
-				if (x == 0 && y == 0) {
-					GD.Print("Both x and y are 0!");
-				}
 
 				float height1 = Squared(GetHeight(x,y,heightMap,mountainRangeMap,mountainPriority,erosionPriority));
 				float height2 = Squared(GetHeight(x+meshSimplificationIncrement,y,heightMap,mountainRangeMap,mountainPriority,erosionPriority));
@@ -75,7 +72,7 @@ public static class MeshGenerator {
 	}
 
 	// TODO there might be a built in function for this, basically just wanted to make higher heights increase faster
-	static float Squared(float num) {
+	public static float Squared(float num) {
 		return ((num*50) * (num*50))/100;
 	}
 }

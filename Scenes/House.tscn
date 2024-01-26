@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5nfwkhkmxiog"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_otenl"]
+
+[node name="House" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_otenl")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0)
+target_position = Vector3(0, 1000, 0)
+collide_with_areas = true
+debug_shape_thickness = 5
