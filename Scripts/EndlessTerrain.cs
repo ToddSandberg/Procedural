@@ -84,21 +84,37 @@ public partial class EndlessTerrain : Node {
 		GD.Print("Generating house");
 		// 1. for now, get a random x and y between -480 and 480
 		int randX = (int)(GD.Randi() % (maxViewDst * 2)) - (int)maxViewDst;
-		int randY = (int)(GD.Randi() % (maxViewDst * 2)) -(int) maxViewDst;
-		// 2. figure out which chunk this is in
-		int randChunkCoordX = Mathf.RoundToInt(randX / chunkSize);
-		int randChunkCoordY = Mathf.RoundToInt(randY / chunkSize);
-		TerrainChunk currentChunk = terrainChunkDictionary[new Vector2(randChunkCoordX, randChunkCoordY)];
-		// 3. get height of position in chunk
-		// Mod by chunksize to get relative x,y coordinates within the chunk
-		// TODO TBH this still doesnt work perfect, if there is a way to get the exact height of the mesh might be better (maybe raycast?)
-		/*int xPositionInChunk = Math.Abs(randX%chunkSize);
-		int yPositionInChunk = Math.Abs(randY%chunkSize);
-		GD.Print(xPositionInChunk);
-		GD.Print(yPositionInChunk);
-		GD.Print(currentChunk.GetHeight(xPositionInChunk, yPositionInChunk));*/
-		// TODO temporary, trying to mock what we do in terrain generation, this should be extracted
-		//float height = MeshGenerator.Squared(currentChunk.GetHeight(xPositionInChunk, yPositionInChunk) * 0.5f) * 50;
+		int randY = (int)(GD.Randi() % (maxViewDst * 2)) - (int)maxViewDst;
+
+		bool validHeightFound = false;
+		int currentTries = 0;
+	
+
+		while(!validHeightFound && currentTries < 50) {
+			// 2. figure out which chunk this is in
+			int randChunkCoordX = Mathf.RoundToInt(randX / chunkSize);
+			int randChunkCoordY = Mathf.RoundToInt(randY / chunkSize);
+			TerrainChunk currentChunk = terrainChunkDictionary[new Vector2(randChunkCoordX, randChunkCoordY)];
+			// 3. get height of position in chunk
+			// Mod by chunksize to get relative x,y coordinates within the chunk
+			int xPositionInChunk = Math.Abs(randX%chunkSize);
+			int yPositionInChunk = Math.Abs(randY%chunkSize);
+			float heightMapHeight = currentChunk.GetHeight(xPositionInChunk, yPositionInChunk);
+			if (heightMapHeight > 0.32f && heightMapHeight < 0.37f) {
+				GD.Print("Valid height found");
+				validHeightFound = true;
+			} else {
+				GD.Print("inValid height found: " + heightMapHeight);
+				currentTries++;
+
+				randX = (int)(GD.Randi() % (maxViewDst * 2)) - (int)maxViewDst;
+				randY = (int)(GD.Randi() % (maxViewDst * 2)) - (int)maxViewDst;
+			}
+		}
+
+		if (!validHeightFound) {
+			GD.Print("Valid height not found");
+		}
 
 		// 4. instantiate house object
 		var house = GD.Load<PackedScene>("res://Scenes/House.tscn");
@@ -111,10 +127,6 @@ public partial class EndlessTerrain : Node {
 		// Get height by raycast
 		RayCast3D rayCast = (RayCast3D) instance.GetNode("RayCast3D");
 		rayCast.ForceRaycastUpdate();
-		GD.Print(rayCast.IsPhysicsProcessing());
-		GD.Print(rayCast.TargetPosition);
-		GD.Print(rayCast.CollisionMask);
-		GD.Print(rayCast.Enabled);
 		float height = 0;
 		if (rayCast.IsColliding()) {
 			height = rayCast.GetCollisionPoint().Y;
@@ -183,7 +195,7 @@ public partial class EndlessTerrain : Node {
 		}
 
 		public float GetHeight(int x, int y) {
-			return mapData.noiseMap[x,y];
+			return MeshGenerator.GetHeight(x,y,mapData.noiseMap,0.5f);
 		}
 	}
 }

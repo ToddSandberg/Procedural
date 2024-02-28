@@ -25,10 +25,10 @@ public static class MeshGenerator {
 				//meshData.AddTriangle(vertexIndex, vertexIndex + width + 1, vertexIndex + width);
 				//meshData.AddTriangle(vertexIndex + width + 1, vertexIndex, vertexIndex + 1);
 
-				float height1 = Squared(GetHeight(x,y,heightMap,mountainRangeMap,mountainPriority,erosionPriority));
-				float height2 = Squared(GetHeight(x+meshSimplificationIncrement,y,heightMap,mountainRangeMap,mountainPriority,erosionPriority));
-				float height3 = Squared(GetHeight(x,y+meshSimplificationIncrement,heightMap,mountainRangeMap,mountainPriority,erosionPriority));
-				float height4 = Squared(GetHeight(x+meshSimplificationIncrement,y+meshSimplificationIncrement,heightMap,mountainRangeMap,mountainPriority,erosionPriority));
+				float height1 = Squared(GetHeight(x,y,heightMap,erosionPriority));
+				float height2 = Squared(GetHeight(x+meshSimplificationIncrement,y,heightMap,erosionPriority));
+				float height3 = Squared(GetHeight(x,y+meshSimplificationIncrement,heightMap,erosionPriority));
+				float height4 = Squared(GetHeight(x+meshSimplificationIncrement,y+meshSimplificationIncrement,heightMap,erosionPriority));
 
 				// Add at x,y
 				meshData.uvs[vertexIndex] = new Vector2(x/(float)(width-1), y/(float)(height - 1));
@@ -67,7 +67,7 @@ public static class MeshGenerator {
 		return meshData;
 	}
 
-	public static float GetHeight(int x, int y, float[,] heightMap, float[,] mountainRangeMap, float mountainPriority, float erosionPriority) {
+	public static float GetHeight(int x, int y, float[,] heightMap, float erosionPriority) {
 		return (heightMap[x,y] * erosionPriority) /*+ (mountainRangeMap[x,y] * mountainPriority)*/;
 	}
 

@@ -87,7 +87,7 @@ public partial class MapGenerator : Node {
 
 				if (y < mapChunkSize - 1 && x < mapChunkSize - 1) {
 					// Get the middle of noiseMap and mountain range
-					float currentHeight = MeshGenerator.GetHeight(x, y, noiseMap, mountainRangeMap, mountainPriority, erosionPriority);
+					float currentHeight = MeshGenerator.GetHeight(x, y, noiseMap, erosionPriority);
 					for (int i = 0; i < regions.Length; i++) {
 						if (currentHeight <= regions[i].height) {
 							image.FillRect(new Rect2I(x, y, 1, 1), regions[i].color);
