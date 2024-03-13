@@ -3,5 +3,5 @@ using System;
 using System.Collections.Generic;
 
 public class Job {
-    public string name;
+    public string name { get; set; }
 }

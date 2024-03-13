@@ -8,17 +8,18 @@ public enum Gender {
 }
 
 public class Character {
-	public Race race;
-	public Gender gender;
-	public List<PersonalityTrait> personalityTraits;
-	public List<string> backstoryDetails;
-	public Job job;
+	public string name { get; set; }
+	public Race race { get; set; }
+	public Gender gender { get; set; }
+	public List<PersonalityTrait> personalityTraits { get; set; }
+	public List<string> backstoryDetails { get; set; }
+	public Job job { get; set; }
 
 	// Stats
-	public int dexterity;
-	public int strength;
-	public int constitution;
-	public int intelligence;
-	public int wisdom;
-	public int charisma;
+	public int dexterity { get; set; }
+	public int strength { get; set; }
+	public int constitution { get; set; }
+	public int intelligence { get; set; }
+	public int wisdom { get; set; }
+	public int charisma { get; set; }
 }
