@@ -1,15 +1,15 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 public partial class CharacterLoader : Node
 {
 	public override void _Ready()
 	{
-		/*Character character = CreateExampleCharacter();
-		Save(character, "res://Data/exampleCharacter.json");*/
-		Character character = Load("res://Data/exampleCharacter.json");
-		GD.Print("Loaded a character with name: " + character.name);
+		NPCGenerator npcGenerator = new NPCGenerator();
+		Character character = npcGenerator.GenerateNPC();
+		Save(character, "res://Data/exampleCharacter.json");
 	}
 
 	public void Save(Character character, string path) {
@@ -28,16 +28,19 @@ public partial class CharacterLoader : Node
 
 	public Character CreateExampleCharacter() {
 		Character character = new Character();
+		character.firstName = "Joe";
+		character.lastName = "Shmoe";
 		Race race = new Race();
-		race.name = "Human";
+		Origin origin = new Origin();
+		origin.name = "Human";
+		race.origins.Add(origin, 1);
 		character.race = race;
 		character.gender = Gender.MALE;
-		PersonalityTrait[] personalityTraits = new PersonalityTrait[1];
+		List<PersonalityTrait> personalityTraits = new List<PersonalityTrait>();
 		PersonalityTrait personalityTrait = new PersonalityTrait();
 		personalityTrait.name = "Shy";
-		personalityTraits[0] = personalityTrait;
-		string[] backgroundDetails = new string[1];
-		backgroundDetails[0] = "Comes from a land far away";
+		personalityTraits.Add(personalityTrait);
+		character.personalityTraits = personalityTraits;
 		character.job = new Job() { name = "Farmer" };
 		character.dexterity = 10;
 		character.strength = 10;

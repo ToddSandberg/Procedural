@@ -1,18 +1,1 @@
-{
-	"name": "ExamplePerson",
-	"race":{
-		"name":"Human"
-	},
-	"gender":0,
-	"personalityTraits":null,
-	"backstoryDetails":null,
-	"job":{
-		"name":"Farmer"
-	},
-	"dexterity":10,
-	"strength":10,
-	"constitution":10,
-	"intelligence":10,
-	"wisdom":10,
-	"charisma":10
-}
+{"firstName":"sarah","lastName":"Smith","race":null,"gender":1,"personalityTraits":null,"backstoryDetails":null,"job":null,"dexterity":0,"strength":0,"constitution":0,"intelligence":0,"wisdom":0,"charisma":0}
