@@ -7,12 +7,15 @@ public partial class NPCGenerator
 	List<string> maleFirstNames = new List<string>();
 	List<string> femaleFirstNames = new List<string>();
 	List<string> lastNames = new List<string>();
+	List<Origin> possibleOrigins = new List<Origin>();
 
 	public NPCGenerator() {
 		NameLoader nameLoader = new NameLoader();
 		maleFirstNames = nameLoader.Load("res://Data/Characters/Names/First/Male");
 		femaleFirstNames = nameLoader.Load("res://Data/Characters/Names/First/Female");
 		lastNames = nameLoader.Load("res://Data/Characters/Names/Last");
+		OriginLoader originLoader = new OriginLoader();
+		possibleOrigins = originLoader.Load("res://Data/Characters/RaceOrigins");
 	}
 
 	// Used to return an npc birthed from two people
@@ -28,8 +31,8 @@ public partial class NPCGenerator
 		npc.age = age;
 
 		npc.race = new Race();
-		npc.race.AddOrigins(mother.race.origins);
-		npc.race.AddOrigins(father.race.origins);
+		npc.race.AddOrigins(mother.race.GetOrigins());
+		npc.race.AddOrigins(father.race.GetOrigins());
 
 		// TODO get personality traits from an imported list
 
@@ -55,16 +58,20 @@ public partial class NPCGenerator
 	}
 
 	// Used to return a brand new random npc
-	public Character GenerateNPC() {
+	public Character GenerateNPC(AgeRange ageRange) {
 		Random rand = new Random();
 		Character npc = new Character();
 		npc.gender = GenerateGender(rand);
 		npc.firstName = GenerateFirstName(npc.gender, rand);
 		npc.lastName = lastNames[rand.Next(0, lastNames.Count)];
 
-		// TODO best way to figure out a good age
+		npc.age = rand.Next(ageRange.minAge, ageRange.maxAge);
 
-		// TODO import possible race origins
+		int randOriginIndex = rand.Next(0, possibleOrigins.Count);
+		Origin originToAdd = possibleOrigins[randOriginIndex];
+		Race race = new Race();
+		race.AddOrigins(originToAdd, 1);
+        npc.race = race;
 
 		// TODO get personality traits from an imported list
 
@@ -92,3 +99,13 @@ public partial class NPCGenerator
 		}
 	}
 }
+
+public class AgeRange {
+	public int minAge;
+	public int maxAge;
+
+	public AgeRange(int minAge, int maxAge) {
+		this.minAge = minAge;
+		this.maxAge = maxAge;
+	}
+} 

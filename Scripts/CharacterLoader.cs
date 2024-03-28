@@ -8,7 +8,7 @@ public partial class CharacterLoader : Node
 	public override void _Ready()
 	{
 		NPCGenerator npcGenerator = new NPCGenerator();
-		Character character = npcGenerator.GenerateNPC();
+		Character character = npcGenerator.GenerateNPC(new AgeRange(0, 60));
 		Save(character, "res://Data/exampleCharacter.json");
 	}
 
@@ -33,7 +33,7 @@ public partial class CharacterLoader : Node
 		Race race = new Race();
 		Origin origin = new Origin();
 		origin.name = "Human";
-		race.origins.Add(origin, 1);
+		race.AddOrigins(origin, 1);
 		character.race = race;
 		character.gender = Gender.MALE;
 		List<PersonalityTrait> personalityTraits = new List<PersonalityTrait>();
