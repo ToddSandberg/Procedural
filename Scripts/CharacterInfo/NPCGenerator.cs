@@ -8,6 +8,7 @@ public partial class NPCGenerator
 	List<string> femaleFirstNames = new List<string>();
 	List<string> lastNames = new List<string>();
 	List<Origin> possibleOrigins = new List<Origin>();
+	List<PersonalityTrait> possiblePersonalityTraits = new List<PersonalityTrait>();
 
 	public NPCGenerator() {
 		NameLoader nameLoader = new NameLoader();
@@ -16,6 +17,8 @@ public partial class NPCGenerator
 		lastNames = nameLoader.Load("res://Data/Characters/Names/Last");
 		OriginLoader originLoader = new OriginLoader();
 		possibleOrigins = originLoader.Load("res://Data/Characters/RaceOrigins");
+		PersonalityTraitLoader personalityTraitLoader = new PersonalityTraitLoader();
+		possiblePersonalityTraits = personalityTraitLoader.Load("res://Data/Characters/PersonalityTraits");
 	}
 
 	// Used to return an npc birthed from two people
@@ -34,7 +37,11 @@ public partial class NPCGenerator
 		npc.race.AddOrigins(mother.race.GetOrigins());
 		npc.race.AddOrigins(father.race.GetOrigins());
 
-		// TODO get personality traits from an imported list
+		List<PersonalityTrait> personalityTraits = new List<PersonalityTrait>
+        {
+            possiblePersonalityTraits[rand.Next(0, possiblePersonalityTraits.Count)]
+        };
+		npc.personalityTraits = personalityTraits;
 
 		BackstoryDetails backstory = new BackstoryDetails();
 		backstory.fathersName = father.firstName + " " + father.lastName;
@@ -73,7 +80,11 @@ public partial class NPCGenerator
 		race.AddOrigins(originToAdd, 1);
         npc.race = race;
 
-		// TODO get personality traits from an imported list
+		List<PersonalityTrait> personalityTraits = new List<PersonalityTrait>
+        {
+            possiblePersonalityTraits[rand.Next(0, possiblePersonalityTraits.Count)]
+        };
+		npc.personalityTraits = personalityTraits;
 
 		// TODO random backstory
 
