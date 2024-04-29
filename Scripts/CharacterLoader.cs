@@ -42,12 +42,6 @@ public partial class CharacterLoader : Node
 		personalityTraits.Add(personalityTrait);
 		character.personalityTraits = personalityTraits;
 		character.job = new Job() { name = "Farmer" };
-		character.dexterity = 10;
-		character.strength = 10;
-		character.constitution = 10;
-		character.intelligence = 10;
-		character.wisdom = 10;
-		character.charisma = 10;
 		return character;
 	}
 }

@@ -10,8 +10,11 @@ public partial class NPCGenerator
 	List<Origin> possibleOrigins = new List<Origin>();
 	List<PersonalityTrait> possiblePersonalityTraits = new List<PersonalityTrait>();
 
+	StatCalculator statCalculator;
+
 	public NPCGenerator() {
 		NameLoader nameLoader = new NameLoader();
+		statCalculator = new StatCalculator();
 		maleFirstNames = nameLoader.Load("res://Data/Characters/Names/First/Male");
 		femaleFirstNames = nameLoader.Load("res://Data/Characters/Names/First/Female");
 		lastNames = nameLoader.Load("res://Data/Characters/Names/Last");
@@ -51,12 +54,13 @@ public partial class NPCGenerator
 
 		if (age == 0) {
 			// Thinking stats will start at one, and as the years progress they will increase/decrease
-			npc.dexterity = 1;
-			npc.strength = 1;
-			npc.constitution = 1;
-			npc.intelligence = 1;
-			npc.wisdom = 1;
-			npc.charisma = 1;
+			Dictionary<StatType, int> stats = new Dictionary<StatType, int>();
+			stats.Add(StatType.DEXTERITY, 1);
+			stats.Add(StatType.STRENGTH, 1);
+			stats.Add(StatType.CONSTITUTION, 1);
+			stats.Add(StatType.INTELLIGENCE, 1);
+			stats.Add(StatType.WISDOM, 1);
+			stats.Add(StatType.CHARISMA, 1);
 		} else {
 			// TODO figure out how to generate stats based on age
 		}
@@ -89,6 +93,20 @@ public partial class NPCGenerator
 		// TODO random backstory
 
 		// TODO figure out how to generate stats based on age
+		Dictionary<StatType, int> stats = new Dictionary<StatType, int>();
+		stats.Add(StatType.STRENGTH, 1);
+		stats.Add(StatType.CONSTITUTION, 1);
+		stats.Add(StatType.INTELLIGENCE, 1);
+		stats.Add(StatType.WISDOM, 1);
+		stats.Add(StatType.CHARISMA, 1);
+
+		int dex = 1;
+		for (int i=1;i<=npc.age;i++) {
+			dex += statCalculator.GenerateStatIncrease(i, StatType.DEXTERITY);
+		}
+		stats.Add(StatType.DEXTERITY, dex);
+
+		npc.stats = stats;
 
 		return npc;
 	}

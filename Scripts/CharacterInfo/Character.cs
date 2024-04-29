@@ -7,6 +7,15 @@ public enum Gender {
 	FEMALE
 }
 
+public enum StatType {
+	DEXTERITY,
+	STRENGTH,
+	CONSTITUTION,
+	INTELLIGENCE,
+	WISDOM,
+	CHARISMA
+}
+
 public class Character {
 	public string firstName { get; set; }
 	public string lastName { get; set; }
@@ -15,13 +24,8 @@ public class Character {
 	public List<PersonalityTrait> personalityTraits { get; set; }
 	public BackstoryDetails backstoryDetails { get; set; }
 	public Job job { get; set; }
-	public int age;
+	public int age { get; set; }
 
 	// Stats
-	public int dexterity { get; set; }
-	public int strength { get; set; }
-	public int constitution { get; set; }
-	public int intelligence { get; set; }
-	public int wisdom { get; set; }
-	public int charisma { get; set; }
+	public Dictionary<StatType, int> stats { get; set; }
 }
