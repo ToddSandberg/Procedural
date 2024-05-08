@@ -47,22 +47,33 @@ public partial class NPCGenerator
 		npc.personalityTraits = personalityTraits;
 
 		BackstoryDetails backstory = new BackstoryDetails();
-		backstory.fathersName = father.firstName + " " + father.lastName;
-		backstory.mothersName = mother.firstName + " " + mother.lastName;
+		backstory.fathersName = father.firstName;
+		backstory.mothersName = mother.firstName;
 		backstory.birthPlace = currentLocation;
 		npc.backstoryDetails = backstory;
 
 		if (age == 0) {
 			// Thinking stats will start at one, and as the years progress they will increase/decrease
-			Dictionary<StatType, int> stats = new Dictionary<StatType, int>();
-			stats.Add(StatType.DEXTERITY, 1);
-			stats.Add(StatType.STRENGTH, 1);
-			stats.Add(StatType.CONSTITUTION, 1);
-			stats.Add(StatType.INTELLIGENCE, 1);
-			stats.Add(StatType.WISDOM, 1);
-			stats.Add(StatType.CHARISMA, 1);
+			Dictionary<StatType, int> stats = new Dictionary<StatType, int>
+            {
+                { StatType.DEXTERITY, 1 },
+                { StatType.STRENGTH, 1 },
+                { StatType.CONSTITUTION, 1 },
+                { StatType.INTELLIGENCE, 1 },
+                { StatType.WISDOM, 1 },
+                { StatType.CHARISMA, 1 }
+            };
 		} else {
-			// TODO figure out how to generate stats based on age
+			Dictionary<StatType, int> stats = new Dictionary<StatType, int>
+            {
+                { StatType.DEXTERITY, GetStat(StatType.DEXTERITY, npc.age) },
+                { StatType.STRENGTH, GetStat(StatType.STRENGTH, npc.age) },
+                { StatType.CONSTITUTION, GetStat(StatType.CONSTITUTION, npc.age) },
+                { StatType.INTELLIGENCE, GetStat(StatType.INTELLIGENCE, npc.age) },
+                { StatType.WISDOM, GetStat(StatType.WISDOM, npc.age) },
+                { StatType.CHARISMA, GetStat(StatType.CHARISMA, npc.age) }
+            };
+			npc.stats = stats;
 		}
 
 		return npc;
@@ -90,25 +101,31 @@ public partial class NPCGenerator
         };
 		npc.personalityTraits = personalityTraits;
 
-		// TODO random backstory
+		BackstoryDetails backstoryDetails = new BackstoryDetails();
+		backstoryDetails.mothersName = GenerateFirstName(Gender.FEMALE, rand);
+		backstoryDetails.fathersName = GenerateFirstName(Gender.MALE, rand);
+		// TODO fetch birthplaces for backstory from file
 
-		// TODO figure out how to generate stats based on age
-		Dictionary<StatType, int> stats = new Dictionary<StatType, int>();
-		stats.Add(StatType.STRENGTH, 1);
-		stats.Add(StatType.CONSTITUTION, 1);
-		stats.Add(StatType.INTELLIGENCE, 1);
-		stats.Add(StatType.WISDOM, 1);
-		stats.Add(StatType.CHARISMA, 1);
-
-		int dex = 1;
-		for (int i=1;i<=npc.age;i++) {
-			dex += statCalculator.GenerateStatIncrease(i, StatType.DEXTERITY);
-		}
-		stats.Add(StatType.DEXTERITY, dex);
-
+		Dictionary<StatType, int> stats = new Dictionary<StatType, int>
+        {
+            { StatType.DEXTERITY, GetStat(StatType.DEXTERITY, npc.age) },
+            { StatType.STRENGTH, GetStat(StatType.STRENGTH, npc.age) },
+            { StatType.CONSTITUTION, GetStat(StatType.CONSTITUTION, npc.age) },
+            { StatType.INTELLIGENCE, GetStat(StatType.INTELLIGENCE, npc.age) },
+            { StatType.WISDOM, GetStat(StatType.WISDOM, npc.age) },
+            { StatType.CHARISMA, GetStat(StatType.CHARISMA, npc.age) }
+        };
 		npc.stats = stats;
 
 		return npc;
+	}
+
+	int GetStat(StatType statType, int age) {
+		int stat = 1;
+		for (int i=1;i<=age;i++) {
+			stat += statCalculator.GenerateStatIncrease(i, statType);
+		}
+		return stat;
 	}
 
 	private Gender GenerateGender(Random rand) {
