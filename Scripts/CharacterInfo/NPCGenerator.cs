@@ -9,12 +9,14 @@ public partial class NPCGenerator
 	List<string> lastNames = new List<string>();
 	List<Origin> possibleOrigins = new List<Origin>();
 	List<PersonalityTrait> possiblePersonalityTraits = new List<PersonalityTrait>();
+	List<string> possibleOriginLocations = new List<string>();
 
 	StatCalculator statCalculator;
 
 	public NPCGenerator() {
 		NameLoader nameLoader = new NameLoader();
 		statCalculator = new StatCalculator();
+		BackstoryLoader backstoryLoader = new BackstoryLoader();
 		maleFirstNames = nameLoader.Load("res://Data/Characters/Names/First/Male");
 		femaleFirstNames = nameLoader.Load("res://Data/Characters/Names/First/Female");
 		lastNames = nameLoader.Load("res://Data/Characters/Names/Last");
@@ -22,6 +24,8 @@ public partial class NPCGenerator
 		possibleOrigins = originLoader.Load("res://Data/Characters/RaceOrigins");
 		PersonalityTraitLoader personalityTraitLoader = new PersonalityTraitLoader();
 		possiblePersonalityTraits = personalityTraitLoader.Load("res://Data/Characters/PersonalityTraits");
+		possibleOriginLocations = backstoryLoader.Load("res://Data/Characters/OriginLocations");
+		GD.Print(possibleOriginLocations);
 	}
 
 	// Used to return an npc birthed from two people
@@ -104,7 +108,8 @@ public partial class NPCGenerator
 		BackstoryDetails backstoryDetails = new BackstoryDetails();
 		backstoryDetails.mothersName = GenerateFirstName(Gender.FEMALE, rand);
 		backstoryDetails.fathersName = GenerateFirstName(Gender.MALE, rand);
-		// TODO fetch birthplaces for backstory from file
+		backstoryDetails.birthPlace = possibleOriginLocations[rand.Next(0, possibleOriginLocations.Count)];
+		npc.backstoryDetails = backstoryDetails;
 
 		Dictionary<StatType, int> stats = new Dictionary<StatType, int>
         {

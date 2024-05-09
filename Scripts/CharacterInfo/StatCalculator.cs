@@ -13,9 +13,10 @@ public partial class StatCalculator
     public StatCalculator() {
         rnd = new RandomNumberGenerator();
 
-        dexterityCurve.AddPoint(new Vector2(1,0));
-        dexterityCurve.AddPoint(new Vector2(20,1));
-        dexterityCurve.AddPoint(new Vector2(80,-1));
+        dexterityCurve.AddPoint(new Vector2(1,1));
+        dexterityCurve.AddPoint(new Vector2(20,2));
+        dexterityCurve.AddPoint(new Vector2(30,-1));
+        dexterityCurve.AddPoint(new Vector2(80,-2));
         strengthCurve.AddPoint(new Vector2(1,0));
         strengthCurve.AddPoint(new Vector2(20,1));
         strengthCurve.AddPoint(new Vector2(80,-1));
@@ -53,9 +54,9 @@ public partial class StatCalculator
 
     public int GetChange(float value) {
         if (value >= 0) {
-            return (int)Mathf.Ceil(rnd.RandfRange(0, value));
+            return (int)Mathf.Round(rnd.RandfRange(0, value));
         } else {
-            return (int)Mathf.Floor(rnd.RandfRange(0, value));
+            return (int)Mathf.Round(rnd.RandfRange(0, value));
         }
     }
 }
