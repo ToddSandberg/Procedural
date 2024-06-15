@@ -1,17 +1,9 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-public partial class CharacterLoader : Node
+public partial class CharacterLoader
 {
-	public override void _Ready()
-	{
-		NPCGenerator npcGenerator = new NPCGenerator();
-		Character character = npcGenerator.GenerateNPC(new AgeRange(0, 60));
-		Save(character, "res://Data/exampleCharacter.json");
-	}
-
 	public void Save(Character character, string path) {
 		var file = FileAccess.Open(path, FileAccess.ModeFlags.Write);
 		string jsonAsString = JsonSerializer.Serialize(character);

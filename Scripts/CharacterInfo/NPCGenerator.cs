@@ -29,9 +29,12 @@ public partial class NPCGenerator
 	}
 
 	// Used to return an npc birthed from two people
-	public Character GenerateNPC(Character mother, Character father, int age, string currentLocation) {
+	public Character GenerateChild(Character mother, Character father, int age, string currentLocation) {
 		Random rand = new Random();
 		Character npc = new Character();
+		npc.motherId = mother.id;
+		npc.fatherId = mother.id;
+
 		npc.gender = GenerateGender(rand);
 
 		// TODO could be influenced by known people/stories from parents
@@ -84,10 +87,10 @@ public partial class NPCGenerator
 	}
 
 	// Used to return a brand new random npc
-	public Character GenerateNPC(AgeRange ageRange) {
+	public Character GenerateNPC(AgeRange ageRange, Gender gender) {
 		Random rand = new Random();
 		Character npc = new Character();
-		npc.gender = GenerateGender(rand);
+		npc.gender = gender;
 		npc.firstName = GenerateFirstName(npc.gender, rand);
 		npc.lastName = lastNames[rand.Next(0, lastNames.Count)];
 

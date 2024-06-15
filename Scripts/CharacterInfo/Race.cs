@@ -32,7 +32,7 @@ public class Race {
             }
 
             if (originAmounts.ContainsKey(entry.Key.name)) {
-                originAmounts.Add(entry.Key.name, originAmounts[entry.Key.name] + entry.Value);
+                originAmounts[entry.Key.name] = originAmounts[entry.Key.name] + entry.Value;
             } else {
                 originAmounts.Add(entry.Key.name, entry.Value);
             }

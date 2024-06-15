@@ -17,6 +17,7 @@ public enum StatType {
 }
 
 public class Character {
+	public string id { get; set; } = System.Guid.NewGuid().ToString();
 	public string firstName { get; set; }
 	public string lastName { get; set; }
 	public Race race { get; set; }
@@ -25,6 +26,9 @@ public class Character {
 	public BackstoryDetails backstoryDetails { get; set; }
 	public Job job { get; set; }
 	public int age { get; set; }
+	public string motherId { get; set; }
+	public string fatherId { get; set; }
+	public List<string> children { get; set; } = new List<string>();
 
 	// Stats
 	public Dictionary<StatType, int> stats { get; set; }
