@@ -1,8 +1,8 @@
 using Godot;
 using System.Collections.Generic;
 
-public partial class NPCManager : Node
-{
+[Tool]
+public partial class NPCManager : Node {
 	List<Character> npcs = new List<Character>();
 
 	CharacterLoader characterLoader;
@@ -30,7 +30,8 @@ public partial class NPCManager : Node
 		}
 	}
 
-	public void GenerateFamily(string location) {
+	public List<Character> GenerateFamily(string location) {
+		List<Character> newNpcs = new List<Character>();
 		Character father = npcGenerator.GenerateNPC(new AgeRange(20, 40), Gender.MALE);
 		Character mother = npcGenerator.GenerateNPC(new AgeRange(20, 40), Gender.FEMALE);
 		int numOfChildren = rnd.RandiRange(0, 4);
@@ -40,8 +41,13 @@ public partial class NPCManager : Node
 			father.children.Add(child.id);
 			mother.children.Add(child.id);
 			npcs.Add(child);
+			newNpcs.Add(child);
 		}
 		npcs.Add(father);
+		newNpcs.Add(father);
 		npcs.Add(mother);
+		newNpcs.Add(mother);
+
+		return newNpcs;
 	}
 }

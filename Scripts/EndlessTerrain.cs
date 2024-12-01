@@ -18,14 +18,16 @@ public partial class EndlessTerrain : Node {
 	private int lastRerender = 0;
 
 	public static Vector3 viewerPosition;
-	int chunkSize;
+	public int chunkSize;
 	int chunksVisibleInViewDst;
 
-	Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new Dictionary<Vector2, TerrainChunk>();
+	public Dictionary<Vector2, TerrainChunk> terrainChunkDictionary = new Dictionary<Vector2, TerrainChunk>();
 	List<TerrainChunk> terrainChunksVisibleLastUpdate = new List<TerrainChunk>();
 
 	// Just for deleting on rerender for now
 	List<Node3D> objects = new List<Node3D>();
+
+	public bool loading = true;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() {
@@ -37,14 +39,17 @@ public partial class EndlessTerrain : Node {
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta) {
 		if (lastRerender != _rerender) {
+			loading = true;
 			lastRerender = _rerender;
 			GD.Print("Rerendering");
 			viewerPosition = new Vector3(viewer.Position.X, viewer.Position.Y, viewer.Position.Z);
 			UpdateVisibleChunks();
 			// TODO clear out old houses
-			for (int x=0; x < 15; x++) {
+			/*for (int x=0; x < 15; x++) {
 				GenerateHouse();
-			}
+			}*/
+
+			loading = false;
 		}
 	}
 
