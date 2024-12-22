@@ -23,7 +23,8 @@ public partial class HouseGenerator : Node
 	public override void _Process(double delta) {
 		// Just an example of how it would work, in reality it should be called by some game manager
 		if (!initialLoadCompleted && !terrain.loading) {
-			GenerateTown();
+			//GenerateTown();
+			List<House> houses = HouseLoader.Load();
 			initialLoadCompleted = true;
 		}
 	}

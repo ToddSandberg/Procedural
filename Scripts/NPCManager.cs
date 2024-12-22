@@ -17,7 +17,7 @@ public partial class NPCManager : Node {
 		characterLoader = new CharacterLoader();
 		// This class should
 		// TODO this is just for testing
-		GenerateFamily("Asgard");
+		// GenerateFamily("Asgard");
 
 		// TODO saving just for testing
 		SaveNpcs();
